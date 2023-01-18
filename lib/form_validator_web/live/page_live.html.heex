@@ -1,4 +1,4 @@
-<section class="mt-24 w-1/2 shadow flex flex-col items-center justify-center mx-auto p-6 bg-white">
+<section class="mt-12 w-11/12 shadow flex flex-col items-center justify-center mx-auto p-6 bg-white">
   <h1 class="text-4xl font-bold italic text-gray-700">
     Create Account
   </h1>
@@ -9,35 +9,37 @@
 
   <.form
     let={f}
-    for={:user}
+    for={@changeset}
+    phx-change="validate"
+    phx-submit="save"
     id="user-form"
     class="flex flex-col space-y-4 w-full px-6">
 
     <div class="flex flex-col">
       <%= label f, :email, class: "text-gray-400" %>
-      <%= email_input f, :email, autocomplete: "off", class: "rounded shadow-sm focus:ring-opacity-50 border-gray-300 focus:border-gray-900 focus:ring-gray-900" %>
-      <%= error_tag f, :email %>
+      <%= email_input f, :email, autocomplete: "off", class: "rounded shadow-sm focus:ring-opacity-50 #{error_ring(f, :email)}" %>
+      <%= error_tag f, :email, class: "text-red-700 text-sm" %>
     </div>
 
     <div class="flex flex-col">
       <%= label f, :username, class: "text-gray-400" %>
-      <%= text_input f, :username, autocomplete: "off", class: "rounded shadow-sm focus:ring-opacity-50 border-gray-300 focus:border-gray-900 focus:ring-gray-900" %>
-      <%= error_tag f, :username %>
+      <%= text_input f, :username, autocomplete: "off", class: "rounded shadow-sm focus:ring-opacity-50 #{error_ring(f, :username)}" %>
+      <%= error_tag f, :username, class: "text-red-700 text-sm" %>
     </div>
 
     <div class="flex flex-col">
       <%= label f, :password, class: "text-gray-400" %>
-      <%= password_input f, :password, class: "rounded shadow-sm focus:ring-opacity-50 border-gray-300 focus:border-gray-900 focus:ring-gray-900" %>
-      <%= error_tag f, :password %>
+      <%= password_input f, :password, class: "rounded shadow-sm focus:ring-opacity-50 #{error_ring(f, :password)}" %>
+      <%= error_tag f, :password, class: "text-red-700 text-sm" %>
     </div>
 
     <div>
-      <%= submit "Sign up", phx_disable_with: "Saving...", class: "w-full py-2 border-none shadow rounded font-semibold text-sm text-gray-50 hover:bg-violet-600 bg-violet-500" %>
+      <%= submit "Sign up", phx_disable_with: "Saving...", class: "w-full py-2 border-none shadow rounded font-semibold text-sm text-gray-50 hover:bg-violet-600 bg-violet-500"%>
     </div>
 
   </.form>
 
   <p class="text-sm px-10 text-center mt-6 text-gray-400 font-semibold">
-    By signing up, you agree to our Terms , Data Policy and Cookies Policy.
+    By signing up, you agree to our Terms, Data Policy and Cookies Policy.
   </p>
 </section>

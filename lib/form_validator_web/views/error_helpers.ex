@@ -8,13 +8,28 @@ defmodule FormValidatorWeb.ErrorHelpers do
   @doc """
   Generates tag for inlined form input errors.
   """
-  def error_tag(form, field) do
+  def error_tag(form, field, class \\ [class: "invalid-feedback"]) do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
       content_tag(:span, translate_error(error),
-        class: "invalid-feedback",
+        class: Keyword.get(class, :class),
         phx_feedback_for: input_name(form, field)
       )
     end)
+  end
+
+  def error_ring(f, field) do
+    with :validate <- f.source.action do
+      case Keyword.fetch(f.errors, field) do
+        {:ok, _} ->
+          "border-red-700 focus:border-red-700 focus:ring-red-700"
+
+        :error ->
+          "border-green-500 focus:border-green-500 focus:ring-green-500"
+      end
+    else
+      _ ->
+        "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+    end
   end
 
   @doc """
